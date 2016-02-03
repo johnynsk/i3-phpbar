@@ -16,7 +16,6 @@ class Sensor_Conditions_Weather extends Sensor_Abstract
      */
     public function result()
     {
-        var_dump(1);
         $json = $this->di->getCurl()->get('http://pogoda.ngs.ru/api/v1/forecasts/current?city=' . $this->config['city']);
         $data = json_decode($json, true);
 

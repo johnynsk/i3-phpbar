@@ -59,7 +59,6 @@ final class Sensor_Audio_Mocp extends Sensor_Abstract
 
 
         if ($this->title != $title) {
-            var_dump(1);
             $this->title = $title;
             $this->tick = 0;
             $this->colorComponent['G'] = 187;
