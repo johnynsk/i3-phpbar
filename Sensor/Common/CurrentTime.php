@@ -56,7 +56,18 @@ class Sensor_Common_CurrentTime extends Sensor_Abstract
         }
 
         $this->color = $this->colors[$color];
+        $time = microtime(true);
 
-        return date('H:i:s');
+        $format = !empty($this->config['format']) ? $this->config['format'] : 'H:i:s';
+
+        if (!empty($this->config['flash_dots']) && time() % 2 == 0) {
+            $format = preg_replace('/[\W\D]/', ' ', $format);
+        }
+
+        if ($time % 2 == 0) {
+            return date($format);
+        } else {
+            return date($format);
+        }
     }
 }
