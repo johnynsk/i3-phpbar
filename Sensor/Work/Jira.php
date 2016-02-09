@@ -33,17 +33,65 @@ class Sensor_Work_Jira extends Sensor_Abstract
             ]
         );
 
-        $response = json_decode($json);
+        $response = json_decode($json, true);
 
         if (!$response) {
             return 'Нет данных';
-        } elseif (!$response->total) {
+        } elseif (!$response['total']) {
             return 'Нет задач';
-        } elseif ($response->total > 1) {
-            return 'Задач: ' . $response->total;
+        } elseif ($response['total'] > 1) {
+            return 'Задач: ' . $response['total'];
         } else {
-            $issue = reset($response->issues);
-            return $issue->key;
+            $issue = reset($response['issues']);
+            if ($time = $this->_getTimeSpent($issue)) {
+                return $issue['key'] . ' @ ' . $time;
+            }
+            return $issue['key'];
         }
+    }
+
+
+    /**
+     * Расчет времени работы над задачей
+     *
+     * @param $issue
+     * @return int|null|string
+     */
+    protected function _getTimeSpent($issue)
+    {
+        $timeStart = null;
+        $timeSpent = null;
+
+        foreach ($issue['fields']['labels'] as $label) {
+            if (!preg_match('#^jwh:' . preg_quote($this->config['user']) . ':([0-9]+)$#', $label, $matches)) {
+                continue;
+            }
+
+            $timeStart = $matches[1];
+            $timeSpent = time() - $timeStart;
+        }
+
+        if (!$timeSpent) {
+            return $timeSpent;
+        }
+        return $this->_formatTimeDiff($timeSpent);
+    }
+
+
+    /**
+     * Форматирование времени
+     *
+     * @param $timeDiff
+     * @return string
+     */
+    private function _formatTimeDiff($timeDiff)
+    {
+        if ($timeDiff < 60) {
+            return (int)$timeDiff . 's';
+        } elseif ($timeDiff < 3600) {
+            return (int)($timeDiff / 60) . 'm ' . (int)($timeDiff % 60) . 's';
+        }
+
+        return (int)($timeDiff / 3600) . 'h ' . (int)($timeDiff % 3600 / 60) . 'm';
     }
 }
