@@ -20,6 +20,14 @@ class Panel_Iterator
      */
     protected $cache = false;
 
+
+    /**
+     * Начало времени пустого ответа
+     *
+     * @var null|int
+     */
+    protected $_loading;
+
     /**
      * Установка объекта кэша
      * @param Sensor_Cache $cache
@@ -75,6 +83,16 @@ class Panel_Iterator
             }
 
             $result[] = $item;
+        }
+
+        if (empty($result)) {
+            if (!$this->_loading) {
+                $this->_loading = time();
+            }
+
+            $result[] = ['full_text' => 'loading... ' . Helper_Time::format(time() - $this->_loading)];
+        } else {
+            $this->_loading = null;
         }
 
         return $result;

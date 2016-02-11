@@ -28,9 +28,10 @@ foreach ($config['items'] as $itemConfig) {
 }
 
 echo '{"version":1}'."\n[\n[]\n";
+echo ',['.json_encode([['full_text' => 'loading ...']]) .']' . PHP_EOL;
 while (true)
 {
     $result = $iterator->result();
-    echo ',[' . json_encode($result) . "]\n";
+    echo ',[' . json_encode($result) . ']' . PHP_EOL;
     usleep($config['interval'] * 1000);
 }
