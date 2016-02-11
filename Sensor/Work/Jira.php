@@ -14,9 +14,9 @@ class Sensor_Work_Jira extends Sensor_Abstract
      */
     public function __construct($config)
     {
-        parent::__construct($config);
+        $config = array_merge(['host' => '', 'user' => '', 'password' => '', 'response_cache' => 30], $config);
 
-        $this->config = array_merge(['host' => '', 'user' => '', 'password' => '', 'cache_time' => 30], $this->config);
+        parent::__construct($config);
     }
 
 
@@ -24,16 +24,20 @@ class Sensor_Work_Jira extends Sensor_Abstract
      * @return string
      */
     public function result() {
-        $url = 'http://' . $this->config['host'] . '/rest/api/2/search?' . http_build_query(['jql' => "labels = jwh:{$this->config['user']}:in-work"]);
-        $json = $this->di->getCurl()->get(
-            $url,
-            [
-                CURLOPT_USERPWD => "{$this->config['user']}:{$this->config['password']}",
-                CURLOPT_HTTPAUTH => CURLAUTH_BASIC
-            ]
-        );
+        $callback = function () {
+            $url = 'http://' . $this->config['host'] . '/rest/api/2/search?' . http_build_query(['jql' => "labels = jwh:{$this->config['user']}:in-work"]);
+            $json = $this->di->getCurl()->get(
+                $url,
+                [
+                    CURLOPT_USERPWD => "{$this->config['user']}:{$this->config['password']}",
+                    CURLOPT_HTTPAUTH => CURLAUTH_BASIC
+                ]
+            );
 
-        $response = json_decode($json, true);
+            return json_decode($json, true);
+        };
+
+        $response = $this->di->getCache()->get($this->cacheKey . '_response', $callback, $this->config['response_cache']);
 
         if (!$response) {
             return 'Нет данных';
@@ -72,26 +76,9 @@ class Sensor_Work_Jira extends Sensor_Abstract
         }
 
         if (!$timeSpent) {
-            return $timeSpent;
-        }
-        return $this->_formatTimeDiff($timeSpent);
-    }
-
-
-    /**
-     * Форматирование времени
-     *
-     * @param $timeDiff
-     * @return string
-     */
-    private function _formatTimeDiff($timeDiff)
-    {
-        if ($timeDiff < 60) {
-            return (int)$timeDiff . 's';
-        } elseif ($timeDiff < 3600) {
-            return (int)($timeDiff / 60) . 'm ' . (int)($timeDiff % 60) . 's';
+            return null;
         }
 
-        return (int)($timeDiff / 3600) . 'h ' . (int)($timeDiff % 3600 / 60) . 'm';
+        return Helper_Time::format($timeSpent);
     }
 }
