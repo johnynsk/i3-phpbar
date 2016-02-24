@@ -90,13 +90,14 @@ class Sensor_Conditions_Co2 extends Sensor_Abstract
             $text = '' . $value . ' ppm :dash:';
 
             if ($value > 1100 && $value < 1200) {
-                $text = '@here ' . $value .' ppm! :sleeping:';
-            } elseif ($value >= 1200) {
-                $text = '@here ' . $value .' ppm! :skull:';
+                $text = $value .' ppm! :sleeping:';
+            } elseif ($value > 1200 && $value <= 1350) {
+                $text = $value .' ppm! :skull:';
+            } elseif ($value > 1350) {
+                $text = $value . ' ppm! :rip:';
             }
 
-            $this->_sendMessage($text);
-            return true;
+            return $this->_sendMessage($text);
         };
 
         $this->di->getCache()->get($this->cacheKey . '.slack', $sendMessage, $this->config['message_cache_time']);
@@ -110,6 +111,10 @@ class Sensor_Conditions_Co2 extends Sensor_Abstract
      */
     protected function _sendMessage($text)
     {
+        if (empty($this->config['send_messages'])) {
+            return false;
+        }
+
         $settings = [
             'username' => $this->config['username'],
             'token' => $this->config['token'],
