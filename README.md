@@ -15,6 +15,7 @@ Basically it can outputs:
 - Weather from [ngs](http://pogoda.ngs.ru)
 - Unreaded mail [(with imap.py script)](https://github.com/d2one/imap.py)
 - Current Jira's task, counted by [jira-agile-worklog-helper](https://github.com/seletskiy/jira-agile-worklog-helper) 
+- Yandex.disk widget (using with [yandex-disk](https://disk.yandex.ru/download/))
 
 ### installation:
     git clone git@github.com:johnynsk/i3-phpbar.git
