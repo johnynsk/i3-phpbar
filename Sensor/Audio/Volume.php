@@ -26,8 +26,19 @@ class Sensor_Audio_Volume extends Sensor_Abstract
      * @return string
      */
     public function result() {
-        $result = exec('amixer -c 0 sget Master | grep -o "Mono.*Playback.*" | grep -o "[0-9]*%"');
-        $result = '♪' . $result;
+        $level = (int)exec('amixer -c 0 sget Master | grep -o "Mono.*Playback.*" | grep -o "[0-9]*%"');
+
+        if ($level < 50) {
+            $this->color = null;
+        } elseif ($level <= 65) {
+            $this->color = '#66ff66';
+        } elseif ($level < 80) {
+            $this->color = '#ffff66';
+        } else {
+            $this->color = '#ff6666';
+        }
+
+        $result = '♪' . $level . '%';
         return $result;
     }
 }
