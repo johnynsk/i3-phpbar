@@ -10,6 +10,22 @@
 class Sensor_Conditions_Weather extends Sensor_Abstract
 {
     /**
+     * Предыдущий замер
+     *
+     * @var null|int
+     */
+    protected $_lastTemperature = null;
+
+
+    /**
+     * Тренд
+     *
+     * @var null|int
+     */
+    protected $_trend = null;
+
+
+    /**
      * Забирает температуру
      *
      * @return mixed|string
@@ -24,7 +40,37 @@ class Sensor_Conditions_Weather extends Sensor_Abstract
         }
 
         $conditions = reset($data['forecasts']);
+        $temperature = $conditions['temperature'];
 
-        return $conditions['temperature'] . '°C';
+        $trend = '';
+        $this->_determineTrend($temperature);
+        if ($this->_trend > 0) {
+            $trend = '↑';
+        } elseif ($this->_trend < 0) {
+            $trend = '↓';
+        }
+
+        return $temperature . '°C' . $trend;
+    }
+
+
+    /**
+     * Определить тренд температуры
+     *
+     * @param int $temperature
+     */
+    protected function _determineTrend($temperature)
+    {
+        if (is_null($this->_lastTemperature)) {
+            $this->_lastTemperature = $temperature;
+        } elseif ($this->_lastTemperature > $temperature) {
+            $this->_lastTemperature = $temperature;
+            $this->_trend = -1;
+        } elseif ($this->_lastTemperature < $temperature) {
+            $this->_lastTemperature = $temperature;
+            $this->_trend = 1;
+        }
+
+        return $this->_trend;
     }
 }
