@@ -56,13 +56,13 @@ class Sensor_Additional_Currency extends Sensor_Abstract
      */
     protected function _writeHistory()
     {
-        if (!isset($this->options['history_path'])) {
+        if (!isset($this->config['history_path'])) {
             return;
         }
 
         $data = $this->value;
         $data['date'] = time();
 
-        file_put_contents($this->options['history_path'], json_encode($data) . ",\n", FILE_APPEND);
+        file_put_contents($this->config['history_path'], json_encode($data) . ",\n", FILE_APPEND);
     }
 }
