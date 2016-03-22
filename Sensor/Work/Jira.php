@@ -39,6 +39,8 @@ class Sensor_Work_Jira extends Sensor_Abstract
 
         $response = $this->di->getCache()->get($this->cacheKey . '_response', $callback, $this->config['response_cache']);
 
+        $this->_colorify();
+
         if (!$response) {
             return 'Нет данных';
         } elseif (!$response['total']) {
@@ -80,5 +82,20 @@ class Sensor_Work_Jira extends Sensor_Abstract
         }
 
         return Helper_Time::format($timeSpent);
+    }
+
+
+    protected function _colorify()
+    {
+        $from = new DateTime('18:30');
+        $current = new DateTime();
+
+        if ($current->getTimestamp() >= $from->getTimestamp()) {
+            if ($current->getTimestamp() % 2 == 0) {
+                $this->color = 'ff3333';
+            } else {
+                $this->color = null;
+            }
+        }
     }
 }
