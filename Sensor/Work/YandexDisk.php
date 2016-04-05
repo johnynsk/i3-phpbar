@@ -44,6 +44,7 @@ class Sensor_Work_YandexDisk extends Sensor_Abstract
 
         if ($status == 'idle' ) {
             $this->color = '#00cc00';
+            $result = '';
         } elseif ($status == 'busy' || $status = 'index') {
             $this->color = '#cccc00';
             if ($progress) {
@@ -72,8 +73,6 @@ class Sensor_Work_YandexDisk extends Sensor_Abstract
         $status = implode("\n", $status);
 
         if (!preg_match('/Synchronization core status\: ([^\n]+)/us', $status, $matches)) {
-            file_put_contents("/tmp/status.txt", $status);
-            var_dump('error sync status');
             return array_values($result);
         }
 
