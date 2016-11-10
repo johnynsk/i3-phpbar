@@ -71,7 +71,7 @@ return [
             'class'=> 'Audio_Volume'
         ],
         [
-            'enabled' => false,
+            'enabled' => true,
             'class'=> 'Common_CurrentTime'
         ],
         [
