@@ -82,7 +82,7 @@ class Sensor_Di
      */
     public function get($name, $arguments = [], $new = false)
     {
-        $name = mb_strtolower(mb_substr($name, 0, 1)) . mb_substr($name, 1);
+        $name = strtolower(substr($name, 0, 1)) . substr($name, 1);
 
         if (!$new) {
             if (isset($this->instances[$name])) {
