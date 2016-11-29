@@ -1,13 +1,17 @@
 <?php
 
+namespace Sensor\Common;
+
+use \Sensor\SensorAbstract;
+
 /**
  * Показывает текущее время, подкрашивает обед/переработку
  *
  * @category    Sensor
- * @package     Sensor_Common
+ * @package     Sensor\Common
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-class Sensor_Common_CurrentTime extends Sensor_Abstract
+class CurrentTime extends SensorAbstract
 {
     /**
      * Цветовые схемы

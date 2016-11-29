@@ -1,13 +1,18 @@
 <?php
 
+namespace Sensor\Conditions;
+
+use \Sensor\SensorAbstract;
+use \Sensor\CacheableInterface;
+
 /**
  * Парсит и выводит погоду
  *
  * @category    Sensor
- * @package     Sensor_Audio
+ * @package     Sensor\Conditions
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-class Sensor_Conditions_Weather extends Sensor_Abstract
+class Weather extends SensorAbstract implements CacheableInterface
 {
     /**
      * Предыдущий замер

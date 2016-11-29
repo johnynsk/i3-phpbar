@@ -1,10 +1,13 @@
 <?php
+
+namespace Sensor;
+
 return [
     'interval' => 250,
     'items' => [
         [
             'enabled' => false,
-            'class'=> 'Additional_Rss',
+            'class'=> Additional\Rss::class,
             'options' => [
                 'feeds' => [
                     ['sibfm', 'http://feeds.feedburner.com/sibfm/all'],
@@ -26,11 +29,11 @@ return [
         ],
         [
             'enabled' => false,
-            'class'=> 'Audio_Mocp'
+            'class'=> Audio\Mocp::class
         ],
         [
             'enabled' => false,
-            'class'=> 'Additional_Currency',
+            'class'=> Additional\Currency::class,
             'options' => [
                 'cache_time' => 300,
                 'history_path' => '/home/johny/currency.js'
@@ -38,7 +41,7 @@ return [
         ],
         [
             'enabled' => false,
-            'class'=> 'Conditions_Weather',
+            'class' => Conditions\Weather::class,
             'options' => [
                 'cache_time' => 300,
                 'city' => 'novosibirsk'
@@ -46,7 +49,7 @@ return [
         ],
         [
             'enabled' => false,
-            'class'=> 'Conditions_Co2',
+            'class'=> Conditions\Co2::class,
             'options' => [
                 'token' => '',
                 'api' => '',
@@ -59,31 +62,32 @@ return [
         ],
         [
             'enabled' => false,
-            'class'=> 'Work_Jira',
+            'class'=> Work\Jira::class,
             'options' => [
                 'host' => '',
                 'user' => '',
                 'password' => ''
-            ]
+            ],
+            'cache_time' => 10
         ],
         [
             'enabled' => false,
-            'class'=> 'Audio_Volume'
+            'class'=> Audio\Volume::class
         ],
         [
             'enabled' => true,
-            'class'=> 'Common_CurrentTime'
+            'class'=> Common\CurrentTime::class
         ],
         [
             'enabled' => false,
-            'class'=> 'Common_Text',
+            'class'=> Common\Text::class,
             'options' => [
                 'text' => 'hello world'
             ]
         ],
         [
             'enabled' => false,
-            'class'=> 'Common_Command',
+            'class'=> Common\Command::class,
             'options' => [
                 'command' => 'ip a | grep inet | grep "global eth0" | sed -rn "s/.* ([0-9\.]{9,15})\/.*/\1/p"'
             ]

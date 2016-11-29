@@ -2,17 +2,19 @@
 /**
  * Основной интерпретатор
  */
+require_once 'vendors/autoload.php';
 require_once 'bootstrap.php';
 require_once 'di.php';
 
-$iterator = $di->getIterator();
+$iterator = $di['iterator'];
 
 foreach ($config['items'] as $itemConfig) {
     if (!isset($itemConfig['class']) || (isset($itemConfig['enabled']) && empty($itemConfig['enabled']))) {
         continue;
     }
 
-    $className = 'Sensor_' . $itemConfig['class'];
+    $className = $itemConfig['class'];
+
     if (!class_exists($className)) {
         continue;
     }

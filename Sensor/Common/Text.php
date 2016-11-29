@@ -1,13 +1,17 @@
 <?php
 
+namespace Sensor\Common;
+
+use \Sensor\SensorAbstract;
+
 /**
  * Обычный текстовый вывод
  *
  * @category    Sensor
- * @package     Sensor_Common
+ * @package     Sensor\Common
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-class Sensor_Common_Text extends Sensor_Abstract
+class Text extends SensorAbstract
 {
     public function result()
     {

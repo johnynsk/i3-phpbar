@@ -1,14 +1,19 @@
 <?php
 
+namespace Sensor\Audio;
+
+use \Sensor\SensorAbstract;
+
+
 /**
  * Данные о воспроизводимом треке
  * Moc Player
  *
  * @category    Sensor
- * @package     Sensor_Audio
+ * @package     Sensor\Audio
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-final class Sensor_Audio_Mocp extends Sensor_Abstract
+class Mocp extends SensorAbstract
 {
     /**
      * Предыдущие данные

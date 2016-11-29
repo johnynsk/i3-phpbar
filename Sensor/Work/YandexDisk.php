@@ -1,13 +1,18 @@
 <?php
 
+namespace Sensor\Work;
+
+use \Sensor\SensorAbstract;
+use \Sensor\CacheableInterface;
+
 /**
- * Jira worklog helper
+ * Yandex disk statusbar
  *
  * @category    Sensor
- * @package     Sensor_Work
+ * @package     Sensor\Work
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-class Sensor_Work_YandexDisk extends Sensor_Abstract
+class YandexDisk extends SensorAbstract implements CacheableInterface
 {
     protected $diskStatus = false;
 

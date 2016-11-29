@@ -1,9 +1,11 @@
 <?php
 
+namespace Sensor;
+
 /**
  * Исключения датчиков
  */
-class Sensor_Exception extends Exception
+class Exception extends \Exception
 {
 
 }

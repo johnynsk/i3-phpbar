@@ -1,13 +1,18 @@
 <?php
 
+namespace Sensor\Common;
+
+use \Sensor\SensorAbstract;
+use \Sensor\CacheableInterface;
+
 /**
  * Исполнение комманды
  *
  * @category    Sensor
- * @package     Sensor_Common
+ * @package     Sensor\Common
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-class Sensor_Common_Command extends Sensor_Abstract
+class Command extends SensorAbstract implements CacheableInterface
 {
     public function result()
     {

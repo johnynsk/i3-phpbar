@@ -1,13 +1,18 @@
 <?php
 
+namespace Sensor\Conditions;
+
+use \Sensor\SensorAbstract;
+use \Sensor\CacheableInterface;
+
 /**
  * Датчик углекислого газа
  *
  * @category    Sensor
- * @package     Sensor_Conditions
+ * @package     Sensor\Conditions
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-class Sensor_Conditions_Co2 extends Sensor_Abstract
+class Co2 extends SensorAbstract implements CacheableInterface
 {
     /**
      * Цветовые схемы

@@ -1,5 +1,10 @@
 <?php
 
+namespace Sensor\Work;
+
+use \Sensor\SensorAbstract;
+use \Sensor\CacheableInterface;
+
 /**
  * Jira worklog helper
  *
@@ -7,7 +12,7 @@
  * @package     Sensor_Audio
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-class Sensor_Work_Jira extends Sensor_Abstract
+class Jira extends SensorAbstract implements CacheableInterface
 {
     /**
      * @param array|null $config
@@ -25,7 +30,9 @@ class Sensor_Work_Jira extends Sensor_Abstract
      */
     public function result() {
         $callback = function () {
-            $url = 'http://' . $this->config['host'] . '/rest/api/2/search?' . http_build_query(['jql' => "labels = jwh:{$this->config['user']}:in-work"]);
+//            $url = 'http://' . $this->config['host'] . '/rest/api/2/search?' . http_build_query(['jql' => "labels = jwh:{$this->config['user']}:in-work"]);
+            $url = 'http://' . $this->config['host'] . '/rest/api/2/search?' . http_build_query(['jql' => "assignee = {$this->config['user']} and status = \"In Progress\""]);
+
             $json = $this->di->getCurl()->get(
                 $url,
                 [
@@ -37,7 +44,7 @@ class Sensor_Work_Jira extends Sensor_Abstract
             return json_decode($json, true);
         };
 
-        $response = $this->di->getCache()->get($this->cacheKey . '_response', $callback, $this->config['response_cache']);
+        $response = $this->di['cache']->get($this->cacheKey . '_response', $callback, $this->config['response_cache']);
 
         $this->_colorify();
 
@@ -68,6 +75,10 @@ class Sensor_Work_Jira extends Sensor_Abstract
         $timeStart = null;
         $timeSpent = null;
 
+        if (empty($issue['fields']['labels'])) {
+            return null;
+        }
+
         foreach ($issue['fields']['labels'] as $label) {
             if (!preg_match('#^jwh:' . preg_quote($this->config['user']) . ':([0-9]+)$#', $label, $matches)) {
                 continue;
@@ -87,8 +98,8 @@ class Sensor_Work_Jira extends Sensor_Abstract
 
     protected function _colorify()
     {
-        $from = new DateTime('18:30');
-        $current = new DateTime();
+        $from = new \DateTime('18:30');
+        $current = new \DateTime();
 
         if ($current->getTimestamp() >= $from->getTimestamp()) {
             if ($current->getTimestamp() % 2 == 0) {
