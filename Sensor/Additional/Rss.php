@@ -1,13 +1,18 @@
 <?php
 
+namespace Sensor\Additional;
+
+use \Sensor\SensorAbstract;
+use \Sensor\CacheableInterface;
+
 /**
  * Класс для работы с RSS источниками
  *
  * @category    Sensor
- * @package     Sensor_Additional
+ * @package     Sensor\Additional
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-class Sensor_Additional_Rss extends Sensor_Abstract
+class Rss extends Sensor_Abstract implements CacheableInterface
 {
     /**
      * Паттерн для парсера
@@ -70,7 +75,7 @@ class Sensor_Additional_Rss extends Sensor_Abstract
             foreach ($this->config['feeds'] as $feed) {
                 $result = array_merge($result, $this->_parseSource($feed));
             }
-    
+
             shuffle($result);
             return $result;
         };

@@ -1,13 +1,17 @@
 <?php
 
+namespace Sensor\Audio;
+
+use \Sensor\SensorAbstract;
+
 /**
  * Данные громкости alsa
  *
  * @category    Sensor
- * @package     Sensor_Audio
+ * @package     Sensor\Audio
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-class Sensor_Audio_Volume extends Sensor_Abstract
+class Volume extends SensorAbstract
 {
     /**
      * @param array|null $config

@@ -1,5 +1,7 @@
 <?php
 
+namespace Sensor;
+
 /**
  * Абстрактный класс источника данных
  *
@@ -7,7 +9,8 @@
  * @package     Sensor
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-abstract class Sensor_Abstract{
+abstract class SensorAbstract
+{
     /**
      * Ключ кэша
      * @var
@@ -56,10 +59,13 @@ abstract class Sensor_Abstract{
     public function __construct($config = null)
     {
         $this->config = $config;
-        $this->cacheKey = 'i3-phpbar.' . get_called_class();
 
-        if (isset($config['cache_time'])) {
-            $this->cacheTime = $config['cache_time'];
+        if ($this instanceof CacheableInterface) {
+            $this->cacheKey = 'i3-phpbar.' . get_class($this);
+
+            if (isset($config['cache_time'])) {
+                $this->cacheTime = $config['cache_time'];
+            }
         }
 
         if (isset($config['color'])) {
@@ -85,7 +91,7 @@ abstract class Sensor_Abstract{
      * @param Sensor_Di $di
      * @return $this
      */
-    public function setDi(Sensor_Di $di)
+    public function setDi(Di $di)
     {
         $this->di = $di;
 

@@ -1,5 +1,9 @@
 <?php
 
+namespace Sensor\Work;
+
+use \Sensor\SensorAbstract;
+
 /**
  * Jira worklog helper
  *
@@ -7,7 +11,7 @@
  * @package     Sensor_Work
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-class Sensor_Work_RunningTasks extends Sensor_Abstract
+class RunningTasks extends SensorAbstract
 {
     protected $diskStatus = false;
 

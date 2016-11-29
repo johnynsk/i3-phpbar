@@ -1,9 +1,11 @@
 <?php
 
+namespace Sensor;
+
 /**
  * Обёртка над memcached
  */
-class Sensor_Cache
+class Cache
 {
     /**
      * @var Memcached
@@ -16,7 +18,7 @@ class Sensor_Cache
      */
     public function __construct()
     {
-        $this->cache = new Memcached();
+        $this->cache = new \Memcached();
         $this->cache->addServer('localhost', 11211);
 
     }

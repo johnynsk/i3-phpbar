@@ -1,5 +1,9 @@
 <?php
 
+namespace Panel;
+
+use \Sensor\CacheableInterface;
+
 /**
  * Обработка всех датчиков
  *
@@ -7,16 +11,16 @@
  * @package     Panel
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-class Panel_Iterator
+class Iterator
 {
     /**
-     * @var Sensor_Abstract[]
+     * @var \Sensor\SensorAbstract[]
      */
     protected $instances = [];
 
 
     /**
-     * @var Sensor_Cache
+     * @var \Sensor\Cache
      */
     protected $cache = false;
 
@@ -24,35 +28,49 @@ class Panel_Iterator
     /**
      * Начало времени пустого ответа
      *
+     * Warmup starting timestamp
+     *
      * @var null|int
      */
     protected $_loading;
 
     /**
      * Установка объекта кэша
-     * @param Sensor_Cache $cache
+     *
+     * Sets cache instance
+     *
+     * @param \Sensor\Cache $cache
      */
-    public function setCache($cache)
+    public function setCache(\Sensor\Cache $cache)
     {
         $this->cache = $cache;
+
+        return $this;
     }
 
 
     /**
      * Добавляет датчик в обработку
      *
-     * @param Sensor_Abstract $object
+     * Adds sensor to handler
+     *
+     * @param \Sensor\SensorAbstract $object
      */
-    public function add($object)
+    public function add(\Sensor\SensorAbstract $object)
     {
         $object->cacheKey .= '.' . count($this->instances);
         $this->instances[] = $object;
+
+        return $this;
     }
 
 
     /**
      * Выдает готовый массив данных для строки
      * Данные собирает по всем датчикам
+     *
+     * Preparing sensor data for output
+     * Iterating all sensors
      *
      * @return array
      */
@@ -62,11 +80,13 @@ class Panel_Iterator
 
         foreach($this->instances as $object)
         {
-            if (!empty($object->cacheKey) && $this->cache) {
+            if ($object instanceof CacheableInterface && $this->cache) {
                 $callable = [$object, 'result'];
+
                 if (is_callable($object)) {
                     $callable = $object;
                 }
+
                 $value = $this->cache->get($object->cacheKey, $callable, $object->cacheTime);
             } else {
                 $value = $object->result();
@@ -90,7 +110,7 @@ class Panel_Iterator
                 $this->_loading = time();
             }
 
-            $result[] = ['full_text' => 'loading... ' . Helper_Time::format(time() - $this->_loading)];
+            $result[] = ['full_text' => 'loading... ' . \Helper\Time::format(time() - $this->_loading)];
         } else {
             $this->_loading = null;
         }

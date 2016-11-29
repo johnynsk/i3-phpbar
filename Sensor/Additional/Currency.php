@@ -1,14 +1,19 @@
 <?php
 
+namespace Sensor\Additional;
+
+use \Sensor\SensorAbstract;
+use \Sensor\CacheableInterface;
+
 /**
  * Курсы валют.
  * Парсится страница moex.ru
  *
  * @category    Sensor
- * @package     Sensor_Additional
+ * @package     Sensor\Additional
  * @author      Evgeniy Vasilev <e.vasilev@office.ngs.ru>
  */
-class Sensor_Additional_Currency extends Sensor_Abstract
+class Currency extends SensorAbstract implements CacheableInterface
 {
     /**
      * Текущее значение

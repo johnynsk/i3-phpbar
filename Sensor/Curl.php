@@ -1,9 +1,11 @@
 <?php
 
+namespace Sensor;
+
 /**
  * Хелпер для curl
  */
-class Sensor_Curl
+class Curl
 {
     /**
      * Получить данные по ресурсу
@@ -15,6 +17,7 @@ class Sensor_Curl
      */
     public function get($url, $options = [])
     {
+        echo debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
         $allOptions = [
                 CURLOPT_URL => $url,
                 CURLOPT_USERAGENT => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36',

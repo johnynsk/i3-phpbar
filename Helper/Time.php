@@ -1,14 +1,20 @@
 <?php
 
+namespace Helper;
+
 /**
  * Набор функций по работе со временем
  *
- * Class Helper_Time
+ * Set of helpers to processing time
+ *
+ * Class Helper\Time
  */
-class Helper_Time
+class Time
 {
     /**
      * Форматирование времени
+     *
+     * Formatting time like Jira
      *
      * @param $timeDiff
      * @return string

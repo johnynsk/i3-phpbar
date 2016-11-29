@@ -2,26 +2,26 @@
 /**
  * Simple dependency injection
  */
-$di = new Sensor_Di();
+namespace Sensor;
 
-$di->set('cache', function () use ($di, $config) {
-        $instance = new Sensor_Cache($config);
+$di = new Di();
 
-        return $instance;
-    }
-);
+$di['cache'] = function () use ($di, $config) {
+    $instance = new Cache($config);
 
-$di->set('iterator', function () use ($di, $config) {
-        $iterator = new Panel_Iterator($config);
-        $iterator->setCache($di->getCache());
+    return $instance;
+};
 
-        return $iterator;
-    }
-);
+$di['iterator'] = function () use ($di, $config) {
+    $iterator = new \Panel\Iterator($config);
+    $iterator->setCache($di['cache']);
 
-$di->set('curl', function () use ($di, $config) {
-        $curl = new Sensor_Curl($config);
+    return $iterator;
+};
 
-        return $curl;
-    }
-);
+$di['curl'] = function () use ($di, $config) {
+    $curl = new Curl($config);
+
+    return $curl;
+};
+

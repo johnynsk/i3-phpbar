@@ -1,9 +1,13 @@
 <?php
 
+namespace Sensor\Di;
+
+use \Sensor\Exception as SensorException;
+
 /**
  * Исключения Di
  */
-class Sensor_Di_Exception extends Sensor_Exception
+class Exception extends SensorException
 {
 
 }
