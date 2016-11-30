@@ -16,7 +16,9 @@ foreach ($config['items'] as $itemConfig) {
     $className = $itemConfig['class'];
 
     if (!class_exists($className)) {
-        continue;
+        echo "class " . $className . " does not exists\n";
+
+        die;
     }
 
     $options = isset($itemConfig['options']) ? $itemConfig['options'] : [];

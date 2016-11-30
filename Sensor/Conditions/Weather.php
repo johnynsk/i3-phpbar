@@ -37,7 +37,7 @@ class Weather extends SensorAbstract implements CacheableInterface
      */
     public function result()
     {
-        $json = $this->di->getCurl()->get('http://pogoda.ngs.ru/api/v1/forecasts/current?city=' . $this->config['city']);
+        $json = $this->di['curl']->get('http://pogoda.ngs.ru/api/v1/forecasts/current?city=' . $this->config['city']);
         $data = json_decode($json, true);
 
         if (!isset($data['forecasts'])) {
