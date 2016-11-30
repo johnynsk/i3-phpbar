@@ -33,7 +33,7 @@ class Jira extends SensorAbstract implements CacheableInterface
 //            $url = 'http://' . $this->config['host'] . '/rest/api/2/search?' . http_build_query(['jql' => "labels = jwh:{$this->config['user']}:in-work"]);
             $url = 'http://' . $this->config['host'] . '/rest/api/2/search?' . http_build_query(['jql' => "assignee = {$this->config['user']} and status = \"In Progress\""]);
 
-            $json = $this->di->getCurl()->get(
+            $json = $this->di['curl']->get(
                 $url,
                 [
                     CURLOPT_USERPWD => "{$this->config['user']}:{$this->config['password']}",

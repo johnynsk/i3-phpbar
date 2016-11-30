@@ -5,7 +5,8 @@ namespace Sensor\Work;
 use \Sensor\SensorAbstract;
 
 /**
- * Jira worklog helper
+ * Checks for any task running.
+ * Helps find crashed lsync, webpack and any other watchers
  *
  * @category    Sensor
  * @package     Sensor_Work
@@ -13,9 +14,6 @@ use \Sensor\SensorAbstract;
  */
 class RunningTasks extends SensorAbstract
 {
-    protected $diskStatus = false;
-
-
     /**
      * @param array|null $config
      */
