@@ -51,7 +51,7 @@ class Co2 extends SensorAbstract implements CacheableInterface
      */
     public function result()
     {
-        $res = $this->di->getCurl()->get($this->config['api']);
+        $res = $this->di['curl']->get($this->config['api']);
 
         if (!$val = json_decode($res, true)) {
             return ' - ';
@@ -105,7 +105,7 @@ class Co2 extends SensorAbstract implements CacheableInterface
             return $this->_sendMessage($text);
         };
 
-        $this->di->getCache()->get($this->cacheKey . '.slack', $sendMessage, $this->config['message_cache_time']);
+        $this->di['cache']->get($this->cacheKey . '.slack', $sendMessage, $this->config['message_cache_time']);
     }
 
 
@@ -127,7 +127,7 @@ class Co2 extends SensorAbstract implements CacheableInterface
             'text' => $text
         ];
 
-        $this->di->getCurl()->get('https://slack.com/api/chat.postMessage?' . http_build_query($settings));
+        $this->di['curl']->get('https://slack.com/api/chat.postMessage?' . http_build_query($settings));
         return true;
     }
 }

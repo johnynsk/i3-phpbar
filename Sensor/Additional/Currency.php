@@ -40,7 +40,7 @@ class Currency extends SensorAbstract implements CacheableInterface
      * @return string
      */
     public function result() {
-        $xml = $this->di->getCurl()->get('http://www.micex.ru/markets/currency/today/index_html?__retry__=1&__node__=node4:10012');
+        $xml = $this->di['curl']->get('http://www.micex.ru/markets/currency/today/index_html?__retry__=1&__node__=node4:10012');
 
         preg_match('#\\\"USDRUB_TOM\ \-\ USD\/RUB\\\", \\\"LAST\\\"\: (.*?),#usi', $xml, $usd);
         preg_match('#\\\"EURRUB_TOM\ \-\ EUR\/RUB\\\", \\\"LAST\\\"\: (.*?),#usi', $xml, $eur);
