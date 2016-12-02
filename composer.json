@@ -19,7 +19,8 @@
         "vendor-dir": "vendors"
     },
     "require": {
-        "pimple/pimple": "~3.0"
+        "pimple/pimple": "~3.0",
+        "johnynsk/i3-phpbar-common": "~1.0"
     }
 }
 

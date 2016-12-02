@@ -80,7 +80,7 @@ class Rss extends Sensor_Abstract implements CacheableInterface
             return $result;
         };
 
-        return $this->di->getCache()->get($this->cacheKey . '.news', $callback, $this->config['cache_time_news']);
+        return $this->di['cache']->get($this->cacheKey . '.news', $callback, $this->config['cache_time_news']);
     }
 
 
@@ -102,7 +102,7 @@ class Rss extends Sensor_Abstract implements CacheableInterface
             $url = $feed;
         }
 
-        $xml = $this->di->getCurl()->get($url);
+        $xml = $this->di['curl']->get($url);
 
         preg_match_all($this->pattern, $xml, $matches);
         foreach ($matches[1] as &$item) {

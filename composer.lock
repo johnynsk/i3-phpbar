@@ -4,9 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b5afc27cedd76cbd0dc5b80088151b6e",
-    "content-hash": "c02fc4d4cb39dcf21a03d0b258bb8cef",
+    "hash": "b3b7b3754f4783408628598c7a0507b6",
+    "content-hash": "d7b3feb3479e923887f6d7d943e8dc86",
     "packages": [
+        {
+            "name": "johnynsk/i3-phpbar-common",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/johnynsk/i3-phpbar-common.git",
+                "reference": "18e7441107a9c69aaab25220bede750204f01831"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/johnynsk/i3-phpbar-common/zipball/18e7441107a9c69aaab25220bede750204f01831",
+                "reference": "18e7441107a9c69aaab25220bede750204f01831",
+                "shasum": ""
+            },
+            "require": {
+                "pimple/pimple": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Sensor": "src"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Evgeniy Vasilev",
+                    "email": "github+dev@evgeniyvasilev.ru",
+                    "role": "Developer"
+                }
+            ],
+            "description": "common utilities for i3-phpbar sensors",
+            "keywords": [
+                "i3-phpbar"
+            ],
+            "support": {
+                "email": "github+dev@evgeniyvasilev.ru",
+                "source": "https://github.com/johnynsk/i3-phpbar-common/tree/v1.0",
+                "issues": "https://github.com/johnynsk/i3-phpbar-common/issues"
+            },
+            "time": "2016-12-02 03:14:00"
+        },
         {
             "name": "pimple/pimple",
             "version": "v3.0.2",
