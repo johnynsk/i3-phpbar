@@ -15,4 +15,3 @@ spl_autoload_register(function ($className) {
     }
 );
 
-$config = require 'config.php';
