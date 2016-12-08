@@ -2,6 +2,17 @@
 /**
  * Основной интерпретатор
  */
+if (isset($_SERVER['HOME']) && file_exists($_SERVER['HOME'] . '/.config/i3-phpbar/config.php')) {
+    $userPath = $_SERVER['HOME'] . '/.config/i3-phpbar';
+    $config = require $userPath . '/config.php';
+
+    if (file_exists($userPath . '/vendors/autoload.php')) {
+        require $userPath . '/vendors/autoload.php';
+    }
+} else {
+    $config = require $userPath . '/config.php';
+}
+
 require_once 'vendors/autoload.php';
 require_once 'bootstrap.php';
 require_once 'di.php';
