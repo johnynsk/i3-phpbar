@@ -30,8 +30,7 @@ class Jira extends SensorAbstract implements CacheableInterface
      */
     public function result() {
         $callback = function () {
-//            $url = 'http://' . $this->config['host'] . '/rest/api/2/search?' . http_build_query(['jql' => "labels = jwh:{$this->config['user']}:in-work"]);
-            $url = 'http://' . $this->config['host'] . '/rest/api/2/search?' . http_build_query(['jql' => "assignee = {$this->config['user']} and status = \"In Progress\""]);
+            $url = 'http://' . $this->config['host'] . '/rest/api/2/search?' . http_build_query(['jql' => $this->config['query']]);
 
             $json = $this->di['curl']->get(
                 $url,
@@ -52,7 +51,15 @@ class Jira extends SensorAbstract implements CacheableInterface
             return 'Нет данных';
         } elseif (!$response['total']) {
             return 'Нет задач';
-        } elseif ($response['total'] > 1) {
+        } elseif ($response['total'] > 1 && $response['total'] <= 5) {
+            $buffer = [];
+
+            foreach ($response['issues'] as $issue) {
+                $buffer[] = $issue['key'];
+            }
+
+            return implode(' | ', $buffer);
+        } elseif ($response['total'] > 5) {
             return 'Задач: ' . $response['total'];
         } else {
             $issue = reset($response['issues']);
