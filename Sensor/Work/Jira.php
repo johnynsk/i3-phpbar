@@ -108,6 +108,8 @@ class Jira extends SensorAbstract implements CacheableInterface
         $from = new \DateTime('18:30');
         $current = new \DateTime();
 
+        $this->color = null;
+
         if ($current->getTimestamp() >= $from->getTimestamp()) {
             if ($current->getTimestamp() % 2 == 0) {
                 $this->color = 'ff3333';

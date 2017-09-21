@@ -20,7 +20,8 @@
     },
     "require": {
         "pimple/pimple": "~3.0",
-        "johnynsk/i3-phpbar-common": "~1.0"
+        "johnynsk/i3-phpbar-common": "~1.0",
+        "krakjoe/pthreads-polyfill": "~1.0"
     }
 }
 

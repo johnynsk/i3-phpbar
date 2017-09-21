@@ -6,8 +6,8 @@ if (isset($_SERVER['HOME']) && file_exists($_SERVER['HOME'] . '/.config/i3-phpba
     $userPath = $_SERVER['HOME'] . '/.config/i3-phpbar';
     $config = require $userPath . '/config.php';
 
-    if (file_exists($userPath . '/vendors/autoload.php')) {
-        require $userPath . '/vendors/autoload.php';
+    if (file_exists($userPath . '/vendor/autoload.php')) {
+        require $userPath . '/vendor/autoload.php';
     }
 } else {
     $config = require $userPath . '/config.php';

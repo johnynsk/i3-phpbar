@@ -4,6 +4,7 @@ namespace Sensor\Conditions;
 
 use \Sensor\SensorAbstract;
 use \Sensor\CacheableInterface;
+use \Sensor\Warning;
 
 /**
  * Парсит и выводит погоду
@@ -41,7 +42,7 @@ class Weather extends SensorAbstract implements CacheableInterface
         $data = json_decode($json, true);
 
         if (!isset($data['forecasts'])) {
-            throw new Sensor_Exception('Не удалось получить данные');
+            throw new Warning('Не удалось получить данные');
         }
 
         $conditions = reset($data['forecasts']);

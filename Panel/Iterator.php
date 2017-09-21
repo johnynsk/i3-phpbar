@@ -3,6 +3,7 @@
 namespace Panel;
 
 use \Sensor\CacheableInterface;
+use \Sensor\Warning;
 
 /**
  * Обработка всех датчиков
@@ -80,16 +81,20 @@ class Iterator
 
         foreach($this->instances as $object)
         {
-            if ($object instanceof CacheableInterface && $this->cache) {
-                $callable = [$object, 'result'];
+            try {
+                if ($object instanceof CacheableInterface && $this->cache) {
+                    $callable = [$object, 'result'];
 
-                if (is_callable($object)) {
-                    $callable = $object;
+                    if (is_callable($object)) {
+                        $callable = $object;
+                    }
+
+                    $value = $this->cache->get($object->cacheKey, $callable, $object->cacheTime);
+                } else {
+                    $value = $object->result();
                 }
-
-                $value = $this->cache->get($object->cacheKey, $callable, $object->cacheTime);
-            } else {
-                $value = $object->result();
+            } catch (Warning $warning) {
+                error_log((new \DateTime("now", new \DateTimeZone("Asia/Novosibirsk")))->format("Y-m-d H:i:s") . ((string) $warning));
             }
 
             if(empty($value)) {
