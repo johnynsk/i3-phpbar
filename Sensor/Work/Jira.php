@@ -45,12 +45,15 @@ class Jira extends SensorAbstract implements CacheableInterface
 
         $response = $this->di['cache']->get($this->cacheKey . '_response', $callback, $this->config['response_cache']);
 
-        $this->_colorify();
+        if (isset($this->config['colorify']) && is_callable($this->config['colorify'])) {
+            $this->color = $this->config['colorify']($this);
+        }
 
+        $prefix = !empty($this->config['prefix']) ? $this->config['prefix'] : '';
         if (!$response) {
-            return 'Нет данных';
+            return !empty($this->config['empty']) ? $this->config['empty'] : null;
         } elseif (!$response['total']) {
-            return 'Нет задач';
+            return !empty($this->config['empty']) ? $this->config['empty'] : null;
         } elseif ($response['total'] > 1 && $response['total'] <= 5) {
             $buffer = [];
 
@@ -58,15 +61,15 @@ class Jira extends SensorAbstract implements CacheableInterface
                 $buffer[] = $issue['key'];
             }
 
-            return implode(' | ', $buffer);
+            return $prefix . implode(' | ', $buffer);
         } elseif ($response['total'] > 5) {
-            return 'Задач: ' . $response['total'];
+            return $prefix . $response['total'];
         } else {
             $issue = reset($response['issues']);
             if ($time = $this->_getTimeSpent($issue)) {
-                return $issue['key'] . ' @ ' . $time;
+                return $prefix . $issue['key'] . ' @ ' . $time;
             }
-            return $issue['key'];
+            return $prefix . $issue['key'];
         }
     }
 
@@ -100,22 +103,5 @@ class Jira extends SensorAbstract implements CacheableInterface
         }
 
         return Helper_Time::format($timeSpent);
-    }
-
-
-    protected function _colorify()
-    {
-        $from = new \DateTime('18:30');
-        $current = new \DateTime();
-
-        $this->color = null;
-
-        if ($current->getTimestamp() >= $from->getTimestamp()) {
-            if ($current->getTimestamp() % 2 == 0) {
-                $this->color = 'ff3333';
-            } else {
-                $this->color = null;
-            }
-        }
     }
 }

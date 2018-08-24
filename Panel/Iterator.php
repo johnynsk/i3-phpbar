@@ -79,7 +79,7 @@ class Iterator
     {
         $result = [];
 
-        foreach($this->instances as $object)
+        foreach($this->instances as $id => $object)
         {
             try {
                 if ($object instanceof CacheableInterface && $this->cache) {

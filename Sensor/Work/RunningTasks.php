@@ -48,7 +48,7 @@ class RunningTasks extends SensorAbstract
 
         $this->color = '#ff5555';
 
-        if (count($errors <=3 )) {
+        if (count($errors) <= 3 ) {
             $result .= 'failed: ' . implode('; ', $errors);
         } else {
             $result = 'too many down tasks';
