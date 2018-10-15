@@ -52,7 +52,7 @@ class Jira extends SensorAbstract implements CacheableInterface
         $prefix = !empty($this->config['prefix']) ? $this->config['prefix'] : '';
         if (!$response) {
             return !empty($this->config['empty']) ? $this->config['empty'] : null;
-        } elseif (!$response['total']) {
+        } elseif (empty($response['total'])) {
             return !empty($this->config['empty']) ? $this->config['empty'] : null;
         } elseif ($response['total'] > 1 && $response['total'] <= 5) {
             $buffer = [];
